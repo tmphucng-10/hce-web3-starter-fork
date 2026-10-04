@@ -1,0 +1,118 @@
+# LAB 7 — TÍNH CHI PHÍ VẬN HÀNH THỰC TẾ
+
+## 1. Công thức tính chi phí
+
+- **1 Gwei** = $10^{-9}$ ETH
+- **Chi phí một giao dịch (ETH)** = Gas Used $\times$ Gas Price (Gwei) $\times 10^{-9}$
+- **Chi phí một giao dịch (USD)** = Chi phí một giao dịch (ETH) $\times$ Giá ETH (USD/ETH)
+- **Chi phí vận hành một tháng** = Chi phí một giao dịch $\times$ Số lượng giao dịch trong tháng
+
+## 2. Bài toán câu lạc bộ tích điểm
+
+### 2.1. Dữ liệu đầu vào
+
+| Tham số | Giá trị |
+| :--- | :--- |
+| Số giao dịch/tháng | 1.000 |
+| Gas Price | 20 Gwei |
+| Giá ETH | 3.000 USD/ETH |
+| Mức giảm chi phí Layer 2 | Rẻ hơn khoảng 100 lần so với Mainnet |
+| Gas Used | **Chưa xác định** |
+
+### 2.2. Chi phí trên Ethereum Mainnet
+
+Gọi **$G$** là Gas Used của một giao dịch cộng điểm.
+
+Các bước tính toán chi phí theo **$G$**:
+
+1. **Chi phí một giao dịch bằng ETH:**
+   - $= G \times 20 \times 10^{-9}$ (ETH)
+
+2. **Chi phí một giao dịch bằng USD:**
+   - $= (G \times 20 \times 10^{-9}) \times 3.000$
+   - $= G \times 60.000 \times 10^{-9}$
+   - $= G \times 0,00006$ (USD)
+
+3. **Chi phí 1.000 giao dịch/tháng bằng ETH:**
+   - $= (G \times 20 \times 10^{-9}) \times 1.000$
+   - $= G \times 20.000 \times 10^{-9}$
+   - $= G \times 0,00002$ (ETH)
+
+4. **Chi phí 1.000 giao dịch/tháng bằng USD:**
+   - $= (G \times 0,00006) \times 1.000$
+   - $= G \times 0,06$ (USD)
+
+### 2.3. Chi phí trên Layer 2
+
+Theo giả định của bài toán, chi phí trên Layer 2 rẻ hơn khoảng 100 lần so với Ethereum Mainnet.
+
+| Tiêu chí | Ethereum Mainnet | Layer 2 |
+| :--- | :--- | :--- |
+| **Chi phí 1 giao dịch (USD)** | $G \times 0,00006$ | $G \times 0,0000006$ |
+| **Chi phí 1 tháng (USD)** | $G \times 0,06$ | $G \times 0,0006$ |
+
+## 3. Phân tích tính khả thi
+
+### 3.1. Ai chịu phí?
+
+- **Nếu câu lạc bộ trả phí:** Câu lạc bộ sẽ phải gánh toàn bộ chi phí vận hành hàng tháng. Điều này đòi hỏi câu lạc bộ phải có ngân sách hoặc quỹ duy trì.
+- **Nếu sinh viên trả phí:** Sinh viên sẽ phải trả phí gas mỗi lần được cộng điểm. Điều này chuyển trực tiếp gánh nặng chi phí lên người dùng.
+
+### 3.2. Sinh viên có chấp nhận chi phí không?
+
+Xét về mặt kinh tế, nếu phí giao dịch phải trả để nhận điểm cao hơn giá trị thực tế của số điểm thưởng đó, sinh viên sẽ không có động lực để nhận điểm. Việc yêu cầu sinh viên trả phí cho các giao dịch nhỏ có thể làm mô hình khó được chấp nhận.
+
+### 3.3. Kết luận
+
+Hiện tại, chưa thể kết luận một con số chi phí cuối cùng vì chưa có giá trị thực tế của Gas Used.
+- Chi phí vận hành trên Mainnet hoàn toàn phụ thuộc vào biến số Gas Used ($G$).
+- Theo giả định của đề bài, phương án chuyển sang Layer 2 giúp giảm chi phí xuống khoảng 100 lần.
+- Kết luận cuối cùng về mức chi phí cần được cập nhật khi có Gas Used thực tế.
+
+## 4. Mở rộng cho ý tưởng đồ án nhóm
+
+- **Ý tưởng sản phẩm:** Quỹ nhóm nhiều người duyệt.
+- **Người dùng:** Một nhóm sinh viên.
+- **Vấn đề cần giải quyết:** Nhóm có một quỹ chung và muốn việc chi quỹ minh bạch.
+
+**Thao tác blockchain chính:**
+- Tạo đề nghị chi.
+- Phê duyệt đề nghị chi.
+- Thực hiện khoản chi.
+- Sau khi đủ 2/3 phê duyệt, khoản chi chỉ được thực hiện một lần.
+
+**Số lượng giao dịch dự kiến/tháng:**
+
+Trong trường hợp giả định có 3 người có quyền duyệt và cần 2/3 đồng ý, một đề nghị hoàn chỉnh gồm:
+- 1 giao dịch tạo đề nghị;
+- 2 giao dịch phê duyệt;
+- 1 giao dịch thực hiện.
+
+Tổng cộng: **4 giao dịch** cho một đề nghị chi.
+
+Gọi **$N$** là số đề nghị chi trong một tháng:
+$$\text{Số giao dịch/tháng} = 4 \times N$$
+*(Công thức này áp dụng trong trường hợp giả định có 3 người duyệt và cần 2/3 đồng ý).*
+
+**Gas Used:**
+
+Gas Used của từng thao tác hiện chưa được đo. Không sử dụng số gas tham khảo như số đo thực tế.
+
+Gọi:
+- $G_{\text{tao}}$: Gas Used khi tạo đề nghị;
+- $G_{\text{duyet}}$: Gas Used của một lần phê duyệt;
+- $G_{\text{thuchien}}$: Gas Used khi thực hiện khoản chi.
+
+**Công thức tổng quát tính chi phí:**
+- $\text{Tổng Gas Used cho 1 đề nghị} = G_{\text{tao}} + 2 \times G_{\text{duyet}} + G_{\text{thuchien}}$
+- $\text{Chi phí 1 đề nghị (ETH)} = \text{Tổng Gas Used} \times \text{Gas Price} \times 10^{-9}$
+- $\text{Chi phí Mainnet 1 tháng (USD)} = N \times \text{Chi phí 1 đề nghị (ETH)} \times \text{Giá ETH}$
+
+Theo giả định của Lab 7:
+$$\text{Chi phí Layer 2 1 tháng (USD)} \approx \frac{\text{Chi phí Mainnet 1 tháng (USD)}}{100}$$
+
+**Nhận xét tính khả thi:**
+
+Một đề nghị chi cần nhiều giao dịch on-chain vì phải ghi nhận việc tạo đề nghị, các lần phê duyệt và việc thực hiện khoản chi. Vì vậy chi phí vận hành tăng theo số lượng đề nghị phát sinh.
+
+Hiện chưa có Gas Used thực tế của từng thao tác nên chưa thể kết luận chính xác chi phí vận hành. Các giá trị này cần được đo trên Remix để cập nhật phép tính trước khi đưa ra kết luận cuối cùng.
