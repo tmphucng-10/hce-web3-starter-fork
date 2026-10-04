@@ -1,0 +1,45 @@
+# LAB 4 — KHẢO SÁT VÀ NHẬN DIỆN HỢP ĐỒNG TIỀM ẨN RỦI RO
+## 1. Đánh giá kiểm tra qua quan sát trực tiếp
+### Hợp đồng A — ClubTokenA
+
+- Phạm vi mã nguồn đã khảo sát: dòng 7–11.
+- Tích hợp cơ chế `Ownable`: Không
+- Tích hợp modifier `onlyOwner`: Không
+- Phát hiện đặc quyền quản trị: Không ghi nhận
+- Tên định danh hàm quản trị: Không có
+- Vị trí dòng code: Không có
+- Đánh giá rủi ro cho nhà đầu tư: An toàn, không có rủi ro can thiệp từ bên ngoài.
+
+### Hợp đồng B — ClubTokenB
+
+- Phạm vi mã nguồn đã khảo sát: dòng 13-21
+- Tích hợp cơ chế `Ownable`: Có
+- Tích hợp modifier `onlyOwner`: Có
+- Phát hiện đặc quyền quản trị: Có xuất hiện
+- Tên định danh hàm quản trị: `mint()`
+- Vị trí dòng code: Dòng 18-20
+- Đánh giá rủi ro cho nhà đầu tư: Chưa thấy dấu hiệu bất thường ngay tại thời điểm khởi tạo.
+
+### Hợp đồng C — ClubTokenC
+
+- Phạm vi mã nguồn đã khảo sát: dòng 23-38
+- Tích hợp cơ chế `Ownable`: Có
+- Tích hợp modifier `onlyOwner`: Có
+- Phát hiện đặc quyền quản trị: Có xuất hiện
+- Tên định danh hàm quản trị: `setRestricted()`
+- Vị trí dòng code: Dòng 30-32
+- Đánh giá rủi ro cho nhà đầu tư: Cần phân tích sâu hơn về cơ chế kiểm soát trạng thái.
+
+## 2. Kết quả phân tích thông qua mô hình AI
+
+- **ClubTokenA**: Cấu trúc mã nguồn thuần túy, không tồn tại các cửa hậu (backdoor) hay quyền hạn đặc biệt nào có khả năng gây tổn hại đến người nắm giữ.
+- **ClubTokenB**: Tồn tại chức năng cho phép tài khoản quản trị phát hành bổ sung lượng token không giới hạn số lượng vào bất kỳ địa chỉ nào tùy ý.
+- **ClubTokenC**: Trao quyền cho chủ sở hữu đưa các địa chỉ ví cụ thể vào danh sách hạn chế, từ đó kiểm soát và ngăn chặn quyền chuyển giao tài sản của người dùng.
+
+## 3. Tổng hợp bảng đánh giá rủi ro
+
+| Định danh hợp đồng | Trạng thái nhận định | Hàm trọng yếu | Vị trí dòng | Tác động và rủi ro đối với người nắm giữ |
+| :--- | :--- | :--- | :--- | :--- |
+| **ClubTokenA** | An toàn, minh bạch | Không phát hiện | Không có | Tổng cung cố định tuyệt đối, hoàn toàn phi tập trung và không ai có quyền tác động. |
+| **ClubTokenB** | Có đặc quyền quản trị | `mint()` | 18-20 | Chủ sở hữu có thể tự ý tạo thêm token vô hạn, dẫn đến rủi ro lạm phát, pha loãng nguồn cung và làm sụt giảm giá trị tài sản của cộng đồng. |
+| **ClubTokenC** | Có đặc quyền kiểm soát | `setRestricted()` | 30-32 | Quản trị viên sở hữu quyền gắn cờ hạn chế (`restricted`) đối với một ví bất kỳ, khiến ví đó mất khả năng chuyển token đi và gây rủi ro kẹt thanh khoản. |
